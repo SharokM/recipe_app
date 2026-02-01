@@ -44,6 +44,7 @@ ol[role="list"] {
 body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: lightgreen;
 }
 
 img,
@@ -119,7 +120,7 @@ header .logo-search svg:hover {
   transform: rotate(25deg);
 }
 header h1 {
-  font-size: 2.5rem;
+  font-size: 2.85rem;
   font-family: var(--headings-font-family);
 }
 
@@ -148,7 +149,7 @@ header .logo-search .search input {
   font-size: 1rem;
   font-family: inherit;
   border: none;
-  border-bottom: 1px solid var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
 }
 
 header .logo-search .search input:hover {
@@ -168,7 +169,7 @@ header .new-recipe {
   width: 260px;
   padding: 1rem 0;
   background-color: var(--primary-color);
-  color: #fff;
+  color: wheat;
   border-radius: 57px;
   font-size: 1rem;
   cursor: pointer;
@@ -183,7 +184,7 @@ header .new-recipe:hover {
 .recipe-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 4rem;
+  gap: 3rem;
   justify-content: center;
   margin: 2rem auto;
 }
@@ -193,8 +194,8 @@ header .new-recipe:hover {
   flex-direction: column;
   flex: 0 0 100%;
   padding: 1rem 2rem 3rem;
-  background-color: #fff;
-  border: 1px solid var(--border-color);
+  background-color: #9ff160;
+  border: 2px solid var(--border-color);
   border-radius: 5px;
   box-shadow: var(--box-shadow);
 }
