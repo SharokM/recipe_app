@@ -194,7 +194,7 @@ header .new-recipe:hover {
   flex-direction: column;
   flex: 0 0 100%;
   padding: 1rem 2rem 3rem;
-  background-color: #9ff160;
+  background-color: #6d1313;
   border: 2px solid var(--border-color);
   border-radius: 5px;
   box-shadow: var(--box-shadow);

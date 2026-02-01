@@ -3,7 +3,6 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'
 db = SQLAlchemy(app)
 
@@ -17,6 +16,7 @@ class Recipe(db.Model):
     image_url = db.Column(db.String(500), nullable=True,
                        default="https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
     servings = db.Column(db.Integer, nullable=False)
+
     def __repr__(self):
         return f"Recipe(id={self.id}, title='{self.title}', description='{self.description}', servings={self.servings})"
     
@@ -49,6 +49,7 @@ def add_recipe():
     for field in required_fields:
         if field not in data or data[field] == "":
             return jsonify({'error': f"Missing required field must be filled: '{field}'"}), 400
+   
     new_recipe = Recipe(
         title=data['title'],
         ingredients=data['ingredients'],
@@ -71,7 +72,49 @@ def add_recipe():
         'description': new_recipe.description,
         'image_url': new_recipe.image_url
     }
-    return jsonify({'message': 'Recipe added successfully', 'recipe': new_recipe_data})
+    return jsonify({'message': 'Recipe ADDED! 🎉', 'recipe': new_recipe_data})
+
+
+@app.route('api/recipes/<int:recipe_id>')
+def update_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if not recipe:
+        return jsonify({'error': 'Recipe not found'}), 404  
+    data = request.get.json()
+    required_fields = ['title', 'ingredients',
+                      'instructions', 'servings', 'description', 'image_url']
+    for field in required_fields:
+        if field not in data or data[field] == "":
+            return jsonify({'error': f"Missing required field: '{field}'"}), 400
+        
+            recipe.title = data['title']
+            recipe.ingredients = data['ingredients']
+            recipe.instructions = data['instructions']
+            recipe.servings = data['servings']
+            recipe.description = data['description']
+            recipe.image_url = data['image_url']
+            db.session.commit()
+ 
+        updated_recipe = {
+            'id': recipe.id,
+            'title': recipe.title,
+            'ingredients': recipe.ingredients,
+            'instructions': recipe.instructions,
+            'servings': recipe.servings,
+            'description': recipe.description,
+            'image_url': recipe.image_url
+    }
+    return jsonify({'message': 'Recipe updated successfully', 'recipe': updated_recipe})
+
+@app.route('api/recipes/<int:recipe_id>', methods=['DELETE'])
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if not recipe:
+        return jsonify({'error': 'Please ensure recipe has been previously added!'}), 404
+    db.session.delete(recipe)
+    db.session.commit()
+    return jsonify({'message': 'Recipe DELETED'})
+    
 
 
 if __name__ == '__main__':
