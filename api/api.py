@@ -45,6 +45,8 @@ def get_all_recipes():
 @app.route('/api/recipes', methods=['POST'])
 def add_recipe():
     data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Invalid or missing JSON, data POST error'}), 400
     required_fields = ['title', 'ingredients', 'instructions', 'servings', 'description', 'image_url']
     for field in required_fields:
         if field not in data or data[field] == "":
@@ -75,12 +77,14 @@ def add_recipe():
     return jsonify({'message': 'Recipe ADDED! 🎉', 'recipe': new_recipe_data})
 
 
-@app.route('api/recipes/<int:recipe_id>', methods=['PUT'])
+@app.route('/api/recipes/<int:recipe_id>', methods=['PUT'])
 def update_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
         return jsonify({'error': 'Recipe not found'}), 404  
     data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Invalid or missing JSON, data PUT error '}), 400
     required_fields = ['title', 'ingredients',
                       'instructions', 'servings', 'description', 'image_url']
     for field in required_fields:
@@ -108,7 +112,7 @@ def update_recipe(recipe_id):
     }
     return jsonify({'message': 'Recipe updated successfully', 'recipe': updated_recipe})
 
-@app.route('api/recipes/<int:recipe_id>', methods=['DELETE'])
+@app.route('/api/recipes/<int:recipe_id>', methods=['DELETE'])
 def delete_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
