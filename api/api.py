@@ -75,7 +75,7 @@ def add_recipe():
     return jsonify({'message': 'Recipe ADDED! 🎉', 'recipe': new_recipe_data})
 
 
-@app.route('api/recipes/<int:recipe_id>')
+@app.route('api/recipes/<int:recipe_id>', methods=['PUT'])
 def update_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
@@ -87,22 +87,24 @@ def update_recipe(recipe_id):
         if field not in data or data[field] == "":
             return jsonify({'error': f"Missing required field: '{field}'"}), 400
         
-            recipe.title = data['title']
-            recipe.ingredients = data['ingredients']
-            recipe.instructions = data['instructions']
-            recipe.servings = data['servings']
-            recipe.description = data['description']
-            recipe.image_url = data['image_url']
-            db.session.commit()
- 
-        updated_recipe = {
-            'id': recipe.id,
-            'title': recipe.title,
-            'ingredients': recipe.ingredients,
-            'instructions': recipe.instructions,
-            'servings': recipe.servings,
-            'description': recipe.description,
-            'image_url': recipe.image_url
+    recipe.title = data['title']
+    recipe.ingredients = data['ingredients']
+    recipe.instructions = data['instructions']
+    recipe.servings = data['servings']
+    recipe.description = data['description']
+    recipe.image_url = data['image_url']
+
+
+    db.session.commit()
+        
+    updated_recipe = {
+        'id': recipe.id,
+        'title': recipe.title,
+        'ingredients': recipe.ingredients,
+        'instructions': recipe.instructions,
+        'servings': recipe.servings,
+        'description': recipe.description,
+        'image_url': recipe.image_url
     }
     return jsonify({'message': 'Recipe updated successfully', 'recipe': updated_recipe})
 
@@ -110,7 +112,7 @@ def update_recipe(recipe_id):
 def delete_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
-        return jsonify({'error': 'Please ensure recipe has been previously added!'}), 404
+        return jsonify({"error": "Please ensure recipe hasn't been previously added!"}), 404
     db.session.delete(recipe)
     db.session.commit()
     return jsonify({'message': 'Recipe DELETED'})
