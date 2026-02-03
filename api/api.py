@@ -80,7 +80,7 @@ def update_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
         return jsonify({'error': 'Recipe not found'}), 404  
-    data = request.get.json()
+    data = request.get_json()
     required_fields = ['title', 'ingredients',
                       'instructions', 'servings', 'description', 'image_url']
     for field in required_fields:
@@ -113,6 +113,7 @@ def delete_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
     if not recipe:
         return jsonify({"error": "Please ensure recipe hasn't been previously added!"}), 404
+   
     db.session.delete(recipe)
     db.session.commit()
     return jsonify({'message': 'Recipe DELETED'})
