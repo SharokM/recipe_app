@@ -1,3 +1,5 @@
+import { X } from "react-feather";
+
 const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedRecipe}) => {
 
     return (
@@ -10,8 +12,8 @@ const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedReci
             <h2>{selectedRecipe.title}</h2>
             <div className='button-container'>
               <button className='edit-button'>Edit</button>
-              <button className='cancel-button'>
-                Close
+              <button className='cancel-button' onClick={handleUnselectedRecipe}>
+               <X /> Close
               </button>
               <button className='delete-button'>Delete</button>
             </div>
@@ -23,11 +25,15 @@ const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedReci
           <h3>Ingredients:</h3>
      
           <ul className='ingredient-list'>
-     
+            {selectedRecipe.ingredients.split(",").map((ingredient, index) => {
+                return <li key={index}>{ingredient}</li>
+            }
+            )}
           </ul>
+
           <h3>Instructions:</h3>
      
-          <pre className='formatted-text'>{selectedRecipe.text}</pre>
+          <pre className='formatted-text'>{selectedRecipe.instructions}</pre>
      
           <h3>Servings: {selectedRecipe.servings}</h3>
         </article>

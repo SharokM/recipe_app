@@ -44,14 +44,14 @@ function App() {
       selectedRecipe={selectedRecipe} 
       handleUnselectedRecipe={handleUnselectedRecipe}/>}
       
-      <div className="recipe-list">
+      {selectedRecipe ? null : <div className="recipe-list">
       {recipes.map((recipe) => {
         return < RecipeExcerpt 
         key={recipe.id} 
         recipe={recipe} 
         handleSelectedRecipe={handleSelectedRecipe}/>
 })}
-      </div>
+      </div>}
 
     </div>
   );
