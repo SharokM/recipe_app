@@ -16,7 +16,7 @@ function App() {
     title: "",
     ingredients: "",
     instructions: "",
-    servings: 1, // conservative default
+    servings: 1, 
     description: "",
     image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   
@@ -40,6 +40,41 @@ function App() {
       }
     }
     fetchAllRecipes()
+  }, []);
+
+  useEffect(()=> {
+    const handleNewRecipe = async (e, newRecipe) => {
+      preventDefault();
+      try {
+        const response = await fetch("/api/recipes", {
+          methods:"POST", 
+          headers: {
+          "Content-Type": "application/json"
+        },
+          body: JSON.stringify(newRecipe)
+        }
+      )
+      if (response.ok) {
+        const data = await response.json();
+        setRecipes([recipes, data])
+        showNewRecipeForm(false)
+        setNewRecipe({
+          title: "",
+          ingredients: "",
+          instructions: "",
+          servings: 1,
+          description: "",
+          image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        })
+      }
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+        console.log("Using fallback data.");
+      }
+      const data = await response.json();
+
+    }
+    handleNewRecipe()
   }, []);
 
   const handleSelectedRecipe = (recipe) => {
@@ -68,13 +103,13 @@ function App() {
   return (
     <div className='recipe-app'>
       <Header showNewRecipeForm={showNewRecipeForm} showRecipeForm={showRecipeForm}/>
-      {showNewRecipeForm && <NewRecipeForm newRecipe={newRecipe} hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm}/>}
+      {showNewRecipeForm && <NewRecipeForm newRecipe={newRecipe} hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm} handleNewRecipe={handleNewRecipe} />}
       {selectedRecipe && 
       <RecipeFull 
       selectedRecipe={selectedRecipe} 
       handleUnselectedRecipe={handleUnselectedRecipe}/>}
       
-      {selectedRecipe ? null : <div className="recipe-list">
+      {selectedRecipe & showNewRecipeForm ? null : <div className="recipe-list">
       {recipes.map((recipe) => {
         return <RecipeExcerpt 
         key={recipe.id} 
