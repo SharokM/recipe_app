@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import Header from "./components/Header";
 import "./App.css";
 import RecipeExcerpt from "./components/RecipeExcerpt";
-import ReceipeFull from "./components/RecipeFull";
+import RecipeFull from "./components/RecipeFull";
 import NewRecipeForm from "./components/NewRecipeForm";
 
 function App() {
@@ -52,26 +52,31 @@ function App() {
 
 
   const hideRecipeForm = () => {
-    showNewRecipeForm(false)
+    setShowNewRecipeForm(false)
   }
 
   const showRecipeForm = () => {
-    showNewRecipeForm(true)
-    selectedRecipe(null)
+    setShowNewRecipeForm(true)
+    setSelectedRecipe(null)
+  }
+
+  const onUpdateForm = (e) => {
+    const {name, value} = e.target;
+    setNewRecipe({...newRecipe, [name]: value})
   }
 
   return (
     <div className='recipe-app'>
-      <Header />
-      {showNewRecipeForm && <NewRecipeForm newRecipe={newRecipe} hideRecipeForm={hideRecipeForm} />}
+      <Header showNewRecipeForm={showNewRecipeForm} showRecipeForm={showRecipeForm}/>
+      {showNewRecipeForm && <NewRecipeForm newRecipe={newRecipe} hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm}/>}
       {selectedRecipe && 
-      <ReceipeFull 
+      <RecipeFull 
       selectedRecipe={selectedRecipe} 
       handleUnselectedRecipe={handleUnselectedRecipe}/>}
       
       {selectedRecipe ? null : <div className="recipe-list">
       {recipes.map((recipe) => {
-        return < RecipeExcerpt 
+        return <RecipeExcerpt 
         key={recipe.id} 
         recipe={recipe} 
         handleSelectedRecipe={handleSelectedRecipe}/>
