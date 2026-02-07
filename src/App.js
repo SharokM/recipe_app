@@ -42,22 +42,22 @@ function App() {
     fetchAllRecipes()
   }, []);
 
-  useEffect(()=> {
+
     const handleNewRecipe = async (e, newRecipe) => {
-      preventDefault();
+      e.preventDefault();
       try {
         const response = await fetch("/api/recipes", {
-          methods:"POST", 
+          method:"POST", 
           headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-          body: JSON.stringify(newRecipe)
+          body: JSON.stringify(newRecipe),
         }
       )
       if (response.ok) {
         const data = await response.json();
-        setRecipes([recipes, data])
-        showNewRecipeForm(false)
+        setRecipes([...recipes, data.recipe])
+        setShowNewRecipeForm(false)
         setNewRecipe({
           title: "",
           ingredients: "",
@@ -66,16 +66,16 @@ function App() {
           description: "",
           image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         })
+        console.log("New recipe added by user:", data.recipe)
+      } else {
+        console.log("Error, response not ok:", response.statusText);
       }
       } catch (error) {
         console.error("Error fetching recipes:", error);
         console.log("Using fallback data.");
       }
-      const data = await response.json();
-
     }
-    handleNewRecipe()
-  }, []);
+
 
   const handleSelectedRecipe = (recipe) => {
     setSelectedRecipe(recipe)
@@ -103,7 +103,13 @@ function App() {
   return (
     <div className='recipe-app'>
       <Header showNewRecipeForm={showNewRecipeForm} showRecipeForm={showRecipeForm}/>
-      {showNewRecipeForm && <NewRecipeForm newRecipe={newRecipe} hideRecipeForm={hideRecipeForm} onUpdateForm={onUpdateForm} handleNewRecipe={handleNewRecipe} />}
+      {showNewRecipeForm && 
+      <NewRecipeForm 
+      newRecipe={newRecipe} 
+      hideRecipeForm={hideRecipeForm} 
+      onUpdateForm={onUpdateForm} 
+      handleNewRecipe={handleNewRecipe} 
+      />}
       {selectedRecipe && 
       <RecipeFull 
       selectedRecipe={selectedRecipe} 

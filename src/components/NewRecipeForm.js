@@ -13,7 +13,8 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           id="title" 
           type='text' 
           name='title' 
-          value={NewRecipeForm.ingredients} 
+          value={newRecipe.title} 
+          onChange={(e) => onUpdateForm(e)}
           placeholder='Enter recipe name'
           required 
           />
@@ -32,7 +33,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           <textarea 
           id="instruction" 
           name='instructions' 
-          value={NewRecipeForm.instructions} 
+          value={newRecipe.instructions} 
           onChange={(e) => onUpdateForm(e)} 
           placeholder='Enter Instructions here'
           required 
@@ -42,7 +43,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           <textarea 
           id="description" 
           name='description' 
-          value={NewRecipeForm.description} 
+          value={newRecipe.description} 
           onChange={(e) => onUpdateForm(e)} 
           placeholder='Enter a brief description of the recipe'
           required 
@@ -53,7 +54,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           id="image" 
           type='text' 
           name='image_url' 
-          value={NewRecipeForm.image_url} 
+          value={newRecipe.image_url} 
           onChange={(e) => onUpdateForm(e)} 
           placeholder='Enter image URL..'
           required 
@@ -64,7 +65,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           id="servings" 
           type='number' 
           name='servings' 
-          value={NewRecipeForm.servings} 
+          value={newRecipe.servings} 
           onChange={(e) => onUpdateForm(e)} 
           placeholder='Servings here..'
           required 
