@@ -1,9 +1,24 @@
 import { X } from "react-feather";
+import EditForm from "./EditForm";
+import { useState } from "react";
 
-const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedRecipe}) => {
+const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedRecipe, onUpdateForm, handleUpdateRecipe}) => {
 
+    const [editiing, setEditing] = useState(false);
+
+    const handleCancel = () => {
+        setEditing(false);
+    }
     return (
         <div className='recipe-details'>
+                 {editiing ? (
+                    <EditForm 
+                    selectedRecipe={selectedRecipe} 
+                    handleCancel={handleCancel} 
+                    onUpdateForm={onUpdateForm}
+                    handleUpdateRecipe={handleUpdateRecipe}
+                    />
+                ) : (        
         <article>
           <header>
             <figure>
@@ -11,13 +26,15 @@ const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedReci
             </figure>
             <h2>{selectedRecipe.title}</h2>
             <div className='button-container'>
-              <button className='edit-button'>Edit</button>
+              <button className='edit-button' onClick={() => setEditing(true)}>Edit</button>
               <button className='cancel-button' onClick={handleUnselectedRecipe}>
                <X /> Close
               </button>
               <button className='delete-button'>Delete</button>
             </div>
           </header>
+
+     
      
           <h3>Description:</h3>
           <p>{selectedRecipe.description}</p>
@@ -37,6 +54,7 @@ const ReceipeFull = ({selectedRecipe, handleSelectedRecipe, handleUnselectedReci
      
           <h3>Servings: {selectedRecipe.servings}</h3>
         </article>
+    )}
     </div>
     )
 }

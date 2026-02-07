@@ -14,7 +14,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           type='text' 
           name='title' 
           value={newRecipe.title} 
-          onChange={(e) => onUpdateForm(e)}
+          onChange={(e) => onUpdateForm(e, "new")}
           placeholder='Enter recipe name'
           required 
           />
@@ -24,7 +24,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
             id="ingredients"
             name='ingredients'
             value={newRecipe.ingredients}
-            onChange={(e) => onUpdateForm(e)}
+            onChange={(e) => onUpdateForm(e, "new")}            
             required
             placeholder='Add ingredients separated by commas - i.e. Flour, sugar, almonds'
           />
@@ -34,7 +34,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           id="instruction" 
           name='instructions' 
           value={newRecipe.instructions} 
-          onChange={(e) => onUpdateForm(e)} 
+          onChange={(e) => onUpdateForm(e, "new")}          
           placeholder='Enter Instructions here'
           required 
           />
@@ -44,7 +44,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           id="description" 
           name='description' 
           value={newRecipe.description} 
-          onChange={(e) => onUpdateForm(e)} 
+          onChange={(e) => onUpdateForm(e, "new")} 
           placeholder='Enter a brief description of the recipe'
           required 
           />
@@ -55,7 +55,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           type='text' 
           name='image_url' 
           value={newRecipe.image_url} 
-          onChange={(e) => onUpdateForm(e)} 
+          onChange={(e) => onUpdateForm(e, "new")} 
           placeholder='Enter image URL..'
           required 
           />
@@ -66,7 +66,7 @@ const NewRecipeForm = ({newRecipe, hideRecipeForm, onUpdateForm, handleNewRecipe
           type='number' 
           name='servings' 
           value={newRecipe.servings} 
-          onChange={(e) => onUpdateForm(e)} 
+          onChange={(e) => onUpdateForm(e, "new")} 
           placeholder='Servings here..'
           required 
           />
