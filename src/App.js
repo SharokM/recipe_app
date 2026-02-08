@@ -24,6 +24,21 @@ function App() {
 
   const [showNewRecipeForm, setShowNewRecipeForm] = useState(false)
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const updateSearchTerm = (e) => {
+    setSearchTerm(e.target.value)
+  }
+
+  const handleSearch = () => {
+    const searchResults = recipes.filter((recipe) => {
+      const valuesToSearch = [title, ingredients, description]
+      // recipe.title.toLowerCase().includes(valuesToSearch.toLowerCase())
+      return valuesToSearch.some((value) => value.toLowerCase().includes(searchTerm.toLowerCase()))
+  })
+  return searchResults;
+  }
+
   useEffect(()=> {
     const fetchAllRecipes = async () => {
       try {
@@ -160,10 +175,17 @@ function App() {
       }
     }
   
+    const displayedRecipes = searchTerm ? handleSearch : recipes;
+
 
   return (
     <div className='recipe-app'>
-      <Header showNewRecipeForm={showNewRecipeForm} showRecipeForm={showRecipeForm}/>
+      <Header 
+      showNewRecipeForm={showNewRecipeForm} 
+      showRecipeForm={showRecipeForm}
+      searchTerm={searchTerm}
+      updateSearchTerm={updateSearchTerm}
+      />
       {showNewRecipeForm && 
       <NewRecipeForm 
       newRecipe={newRecipe} 
@@ -182,7 +204,7 @@ function App() {
       }
       
       {selectedRecipe & showNewRecipeForm ? null : <div className="recipe-list">
-      {recipes.map((recipe) => {
+      {displayedRecipes.map((recipe) => {
         return <RecipeExcerpt 
         key={recipe.id} 
         recipe={recipe} 

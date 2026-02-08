@@ -2,7 +2,7 @@ import React from "react";
 import { Search } from "react-feather";
 import { ReactComponent as Logo } from "../images/utensils.svg";
 
-const Header = ({showRecipeForm}) => {
+const Header = ({showRecipeForm, updateSearchTerm, searchTerm}) => {
   return (
     <header>
       <div className='logo-search'>
@@ -12,7 +12,7 @@ const Header = ({showRecipeForm}) => {
             Search
           </label>
           <input type='text' placeholder='Search' id='search' />
-          <Search />
+          <Search value={searchTerm} onChange={() => updateSearchTerm(e.target.value)}/>
         </div>
       </div>
       <h1>My Favorite Recipes</h1>
