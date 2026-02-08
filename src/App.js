@@ -95,6 +95,7 @@ function App() {
     setSelectedRecipe(null)
   }
 
+  // update form function to update form state as user types in form fields, takes an additional action parameter to determine whether to update newRecipe or selectedRecipe state based on which form is being updated
   const onUpdateForm = (e, action = "new") => {
     const {name, value} = e.target;
     if (action === "new") {
@@ -103,6 +104,7 @@ function App() {
       setSelectedRecipe({...selectedRecipe, [name]: value})
     }}
   
+    // update recipe async function to send updated recipe data to backend and update state with new recipe data on success
     const handleUpdateRecipe = async (e, selectedRecipe) => {
       e.preventDefault();
       const {id} = selectedRecipe;
@@ -137,6 +139,26 @@ function App() {
       }
       setSelectedRecipe(null);
     }
+
+    // delete recipe function 
+    const handleDeleteRecipe = async (recipeId) => {
+      try {
+        const response = await fetch(`/api/recipes/${selectedRecipe.id}`, {
+          method: "DELETE", 
+        }
+      )
+      if (response.ok) {
+        setRecipes(recipes.filter((recipe) => recipe.id !== recipeId))
+        setSelectedRecipe(null)
+        console.log("Existing recipe deleted by user:")
+      } else {
+        console.log("Error, delete not possible:");
+      }
+      } catch (error) {
+        console.error("Error deleting recipe:", error);
+        console.log("Delete failed.");
+      }
+    }
   
 
   return (
@@ -155,6 +177,7 @@ function App() {
       handleUnselectedRecipe={handleUnselectedRecipe}
       onUpdateForm={onUpdateForm}
       handleUpdateRecipe={handleUpdateRecipe}
+      handleDeleteRecipe={handleDeleteRecipe}
       />
       }
       
