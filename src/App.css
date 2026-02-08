@@ -44,7 +44,7 @@ ol[role="list"] {
 body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  background-color: lightgreen;
+  background-color: rgb(212, 131, 83);
 }
 
 img,
@@ -108,7 +108,7 @@ button {
 
 header {
   text-align: center;
-  padding: 1rem 0 5rem 0;
+  padding: 0.5rem 0 5rem 0;
 }
 
 header svg {

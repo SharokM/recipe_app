@@ -32,7 +32,7 @@ function App() {
 
   const handleSearch = () => {
     const searchResults = recipes.filter((recipe) => {
-      const valuesToSearch = [title, ingredients, description]
+      const valuesToSearch = [recipe.title, recipe.ingredients, recipe.description]
       // recipe.title.toLowerCase().includes(valuesToSearch.toLowerCase())
       return valuesToSearch.some((value) => value.toLowerCase().includes(searchTerm.toLowerCase()))
   })
@@ -175,7 +175,7 @@ function App() {
       }
     }
   
-    const displayedRecipes = searchTerm ? handleSearch : recipes;
+    const displayedRecipes = searchTerm ? handleSearch() : recipes;
 
 
   return (
