@@ -4,6 +4,9 @@ import "./App.css";
 import RecipeExcerpt from "./components/RecipeExcerpt";
 import RecipeFull from "./components/RecipeFull";
 import NewRecipeForm from "./components/NewRecipeForm";
+import displayToast from "./helpers/toastHelper";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
@@ -82,8 +85,10 @@ function App() {
           image_url: "https://images.pexels.com/photos/9986228/pexels-photo-9986228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
         })
         console.log("New recipe added by user:", data.recipe)
+        displayToast("Recipe added successfully!", "success")
       } else {
         console.log("Error, response not ok:", response.statusText);
+        displayToast("Oops, something went wrong!", "error")
       }
       } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -178,6 +183,12 @@ function App() {
     const displayedRecipes = searchTerm ? handleSearch() : recipes;
 
 
+    const displayAllRecipes = () => {
+      setSearchTerm("")
+      setSelectedRecipe(null)
+      setShowNewRecipeForm(false)
+    }
+
   return (
     <div className='recipe-app'>
       <Header 
@@ -185,6 +196,7 @@ function App() {
       showRecipeForm={showRecipeForm}
       searchTerm={searchTerm}
       updateSearchTerm={updateSearchTerm}
+      displayAllRecipes={displayAllRecipes}
       />
       {showNewRecipeForm && 
       <NewRecipeForm 
@@ -211,7 +223,7 @@ function App() {
         handleSelectedRecipe={handleSelectedRecipe}/>
 })}
       </div>}
-
+      <ToastContainer />
     </div>
   );
 }
