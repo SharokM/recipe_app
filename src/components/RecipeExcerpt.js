@@ -3,9 +3,6 @@ import { truncateText } from '../helpers/utilities';
 
 const RecipeExcerpt = ({recipe, handleSelectedRecipe}) => {
 
-    // const handleSelectedRecipeClick = () => {
-    //     handleSelectedRecipe(recipe);
-    // }
 
     return (
         <article className="recipe-card">

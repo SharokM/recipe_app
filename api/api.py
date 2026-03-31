@@ -1,9 +1,12 @@
 import time
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
+import os
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipes.db'
+# Absolute path for Docker volume
+# api/api.py
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/recipes.db'
 db = SQLAlchemy(app)
 
 class Recipe(db.Model):
@@ -20,10 +23,6 @@ class Recipe(db.Model):
     def __repr__(self):
         return f"Recipe(id={self.id}, title='{self.title}', description='{self.description}', servings={self.servings})"
     
-
-# with app.app_context():
-#         db.create_all()
-#         db.session.commit()
 
 
 @app.route('/api/recipes', methods=['GET'])
@@ -122,10 +121,18 @@ def delete_recipe(recipe_id):
     db.session.commit()
     return jsonify({'message': 'Recipe DELETED'})
     
+@app.route('/')
+def serve():
+    return send_from_directory('build', 'index.html')
 
+@app.route('/<path:path>')
+def static_files(path):
+    return send_from_directory('build', path)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Create tables if they don't exist yet
+    with app.app_context():
+        db.create_all()
 
-
-
+    # Start the Flask app
+    app.run(host="0.0.0.0", port=5000, debug=True)
