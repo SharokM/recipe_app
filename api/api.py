@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 # Absolute path for Docker volume
 # api/api.py
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data/recipes.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app/data/recipes.db'
 db = SQLAlchemy(app)
 
 class Recipe(db.Model):
