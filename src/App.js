@@ -189,47 +189,46 @@ function App() {
     }
 
   return (
-    <div className='recipe-app'>
-      <Header 
-      showNewRecipeForm={showNewRecipeForm} 
-      showRecipeForm={showRecipeForm}
-      searchTerm={searchTerm}
-      updateSearchTerm={updateSearchTerm}
-      displayAllRecipes={displayAllRecipes}
-      />
+<div className='recipe-app'>
+  <Header 
+    showNewRecipeForm={showNewRecipeForm} 
+    showRecipeForm={showRecipeForm}
+    searchTerm={searchTerm}
+    updateSearchTerm={updateSearchTerm}
+    displayAllRecipes={displayAllRecipes}
+  />
 
-      {showNewRecipeForm && 
-      <NewRecipeForm 
+  {/* New Recipe Form */}
+  {showNewRecipeForm && 
+    <NewRecipeForm 
       newRecipe={newRecipe} 
       hideRecipeForm={hideRecipeForm} 
       onUpdateForm={onUpdateForm} 
       handleNewRecipe={handleNewRecipe} 
-      />
-      }
+    />
+  }
 
-      {selectedRecipe && 
-      <RecipeFull 
+  {/* Selected Recipe Details */}
+  {selectedRecipe && 
+    <RecipeFull 
       selectedRecipe={selectedRecipe} 
       handleUnselectedRecipe={handleUnselectedRecipe}
       onUpdateForm={onUpdateForm}
       handleUpdateRecipe={handleUpdateRecipe}
       handleDeleteRecipe={handleDeleteRecipe}
-      />
-      }
-      
-      {selectedRecipe && !showNewRecipeForm && (
-      <div className="recipe-list">
-      {displayedRecipes.map((recipe) => {
-        return (
-        <RecipeExcerpt 
+    />
+  }
+
+  {/* Recipe List always renders beneath form or selected recipe */}
+  <div className="recipe-list">
+    {displayedRecipes.map((recipe) => (
+      <RecipeExcerpt 
         key={recipe.id} 
         recipe={recipe} 
         handleSelectedRecipe={handleSelectedRecipe}
-        />
-        )
-})}
-      </div>
-    )}
+      />
+    ))}
+  </div>
       <ToastContainer />
     </div>
   );
