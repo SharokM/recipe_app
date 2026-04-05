@@ -191,19 +191,22 @@ function App() {
   return (
     <div className='recipe-app'>
       <Header 
-      showRecipeForm={showRecipeForm}
       showNewRecipeForm={showNewRecipeForm} 
+      showRecipeForm={showRecipeForm}
       searchTerm={searchTerm}
       updateSearchTerm={updateSearchTerm}
       displayAllRecipes={displayAllRecipes}
       />
+
       {showNewRecipeForm && 
       <NewRecipeForm 
       newRecipe={newRecipe} 
       hideRecipeForm={hideRecipeForm} 
       onUpdateForm={onUpdateForm} 
       handleNewRecipe={handleNewRecipe} 
-      />}
+      />
+      }
+
       {selectedRecipe && 
       <RecipeFull 
       selectedRecipe={selectedRecipe} 
@@ -214,14 +217,19 @@ function App() {
       />
       }
       
-      {selectedRecipe & showNewRecipeForm ? null : <div className="recipe-list">
+      {selectedRecipe && !showNewRecipeForm && (
+      <div className="recipe-list">
       {displayedRecipes.map((recipe) => {
-        return <RecipeExcerpt 
+        return (
+        <RecipeExcerpt 
         key={recipe.id} 
         recipe={recipe} 
-        handleSelectedRecipe={handleSelectedRecipe}/>
+        handleSelectedRecipe={handleSelectedRecipe}
+        />
+        )
 })}
-      </div>}
+      </div>
+    )}
       <ToastContainer />
     </div>
   );
