@@ -98,6 +98,7 @@ function App() {
 
   const handleSelectedRecipe = (recipe) => {
     setSelectedRecipe(recipe)
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   const handleUnselectedRecipe = () => {
