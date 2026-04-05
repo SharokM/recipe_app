@@ -98,7 +98,6 @@ function App() {
 
   const handleSelectedRecipe = (recipe) => {
     setSelectedRecipe(recipe)
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   const handleUnselectedRecipe = () => {
@@ -209,6 +208,15 @@ function App() {
     />
   }
 
+<div className="recipe-list">
+    {displayedRecipes.map((recipe) => (
+      <RecipeExcerpt 
+        key={recipe.id} 
+        recipe={recipe} 
+        handleSelectedRecipe={handleSelectedRecipe}
+      />
+    ))}
+  </div>
 
   {selectedRecipe && 
     <RecipeFull 
@@ -220,15 +228,6 @@ function App() {
     />
   }
 
-  <div className="recipe-list">
-    {displayedRecipes.map((recipe) => (
-      <RecipeExcerpt 
-        key={recipe.id} 
-        recipe={recipe} 
-        handleSelectedRecipe={handleSelectedRecipe}
-      />
-    ))}
-  </div>
       <ToastContainer />
     </div>
   );
