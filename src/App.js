@@ -198,7 +198,7 @@ function App() {
     displayAllRecipes={displayAllRecipes}
   />
 
-  {/* New Recipe Form */}
+
   {showNewRecipeForm && 
     <NewRecipeForm 
       newRecipe={newRecipe} 
@@ -208,7 +208,7 @@ function App() {
     />
   }
 
-  {/* Selected Recipe Details */}
+
   {selectedRecipe && 
     <RecipeFull 
       selectedRecipe={selectedRecipe} 
@@ -219,7 +219,6 @@ function App() {
     />
   }
 
-  {/* Recipe List always renders beneath form or selected recipe */}
   <div className="recipe-list">
     {displayedRecipes.map((recipe) => (
       <RecipeExcerpt 
