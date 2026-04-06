@@ -218,7 +218,12 @@ function App() {
     ))}
   </div>
 
-  {selectedRecipe && 
+  {selectedRecipe && (
+  <>
+    <h2 style={{ textAlign: "center", marginTop: "20px" }}>
+      Selected Recipe ↓
+    </h2>
+
     <RecipeFull 
       selectedRecipe={selectedRecipe} 
       handleUnselectedRecipe={handleUnselectedRecipe}
@@ -226,7 +231,8 @@ function App() {
       handleUpdateRecipe={handleUpdateRecipe}
       handleDeleteRecipe={handleDeleteRecipe}
     />
-  }
+  </>
+)}
 
       <ToastContainer />
     </div>
