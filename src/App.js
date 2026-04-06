@@ -221,7 +221,7 @@ function App() {
   {selectedRecipe && (
   <>
     <h2 style={{ textAlign: "center", marginTop: "20px" }}>
-      Selected Recipe ↓
+      Selected Recipe ⬆️ 
     </h2>
 
     <RecipeFull 
